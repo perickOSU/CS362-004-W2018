@@ -724,7 +724,6 @@ void adventurerEffect(struct gameState *state, int currentPlayer)
  * 		Plays the smithy card.  It's an action card which draws three cards from
  * 		the player's deck.
  */
-
 void smithyEffect(struct gameState *state, int currentPlayer, int handPos)
 {
 	int i;
@@ -740,10 +739,60 @@ void smithyEffect(struct gameState *state, int currentPlayer, int handPos)
 
 
 
+
+/*
+ * remodelEffect()
+ *
+ * @params
+ * 		struct gameState	*state				state of the game.
+ * 		int					currentPlayer		the current player.
+ * 		int					handPos				hand position of smithy card.
+ * 		int					choice1				card chosen to be trashed.
+ * 		int					choice2				card chosen to be pulled from supply.
+ *
+ * @pre
+ * 		intialized game, current player selected.
+ * 
+ * @post
+ * 		adjusted game state in accordance to effect of card.
+ *
+ * @desc
+ * 		Plays the remodel card.  It's an action card which allows you to trash a card from your hand.
+ * 		the player may pull a card from the supply costing up to two more than the trashed card.  
+ * 		the card pulled from supply goes to the discard pile.
+ */
+void remodelEffect(struct gameState *state, int currentPlayer, int handPos, int choice1, int choice2)
+{
+	int j;
+	int i;
+
+	/* store card we will trash. */
+	j = state->hand[currentPlayer][choice1];  
+
+	if ( (getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2) )
+	{
+		return -1;
+	}
+
+	gainCard(choice2, state, 0, currentPlayer);
+
+	/* discard remodel card from hand. */
+	discardCard(handPos, currentPlayer, state, 0);
+
+	/* discard trashed card. */
+	for (i = 0; i < state->handCount[currentPlayer]; i++)
+	{
+		if (state->hand[currentPlayer][i] == j)
+		{
+			discardCard(i, currentPlayer, state, 0);			
+			break;
+		}
+	}
+}
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
-	int i;
-	int j;
 	int k;
 	int x;
 	int index;
@@ -761,6 +810,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	int cardDrawn;
 	int temphand[MAX_HAND];// moved above the if statement
 	int z = 0;// this is the counter for the temp hand
+	int i;
+	int j;
 
 
 
@@ -894,29 +945,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			return 0;
 
 		case remodel:
-			j = state->hand[currentPlayer][choice1];  //store card we will trash
-
-			if ( (getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2) )
-			{
-				return -1;
-			}
-
-			gainCard(choice2, state, 0, currentPlayer);
-
-			//discard card from hand
-			discardCard(handPos, currentPlayer, state, 0);
-
-			//discard trashed card
-			for (i = 0; i < state->handCount[currentPlayer]; i++)
-			{
-				if (state->hand[currentPlayer][i] == j)
-				{
-					discardCard(i, currentPlayer, state, 0);			
-					break;
-				}
-			}
-
-
+			remodelEffect(state, currentPlayer, handPos, choice1, choice2);
 			return 0;
 
 		case smithy:
