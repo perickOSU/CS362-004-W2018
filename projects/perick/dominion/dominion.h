@@ -128,4 +128,15 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 /* Set array position of each player who won (remember ties!) to
    1, others to 0 */
 
+
+/*
+ * card play effect functions.
+ */
+void adventurerEffect(struct gameState *state, int currentPlayer);
+void smithyEffect(struct gameState *state, int currentPlayer, int handPos);
+void remodelEffect(struct gameState *state, int currentPlayer, int handPos, int choice1, int choice2);
+void villageEffect(struct gameState *state, int currentPlayer, int handPos);
+void great_hallEffect(struct gameState *state, int currentPlayer, int handPos);
+
+
 #endif

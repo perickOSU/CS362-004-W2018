@@ -644,6 +644,8 @@ int getCost(int cardNumber)
 }
 
 
+
+
 /*
  * adventurerEffect()
  *
@@ -662,7 +664,6 @@ int getCost(int cardNumber)
  * 		cards are drawn.  Cards drawn from the deck which are not treasure go to the
  * 		player's discard pile.
  */
-
 void adventurerEffect(struct gameState *state, int currentPlayer)
 {
 	/*
@@ -703,6 +704,7 @@ void adventurerEffect(struct gameState *state, int currentPlayer)
 		z--;
 	}
 }
+
 
 
 
@@ -791,6 +793,8 @@ void remodelEffect(struct gameState *state, int currentPlayer, int handPos, int 
 }
 
 
+
+
 /*
  * villageEffect()
  *
@@ -821,6 +825,8 @@ void villageEffect(struct gameState *state, int currentPlayer, int handPos)
 	/* discard played card from hand */
 	discardCard(handPos, currentPlayer, state, 0);
 }
+
+
 
 
 /*
