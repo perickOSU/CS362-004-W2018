@@ -705,6 +705,41 @@ void adventurerEffect(struct gameState *state, int currentPlayer)
 }
 
 
+
+/*
+ * smithyEffect()
+ *
+ * @params
+ * 		struct gameState	*state				state of the game.
+ * 		int					currentPlayer		the current player.
+ * 		int					handPos				hand position of smithy card.
+ *
+ * @pre
+ * 		intialized game, current player selected.
+ * 
+ * @post
+ * 		adjusted game state in accordance to effect of card.
+ *
+ * @desc
+ * 		Plays the smithy card.  It's an action card which draws three cards from
+ * 		the player's deck.
+ */
+
+void smithyEffect(struct gameState *state, int currentPlayer, int handPos)
+{
+	int i;
+
+	for (i = 0; i < 3; i++)
+	{
+		drawCard(currentPlayer, state);
+	}
+
+	/* discard smithy card from hand. */
+	discardCard(handPos, currentPlayer, state, 0);
+}
+
+
+
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
 	int i;
@@ -885,14 +920,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			return 0;
 
 		case smithy:
-			//+3 Cards
-			for (i = 0; i < 3; i++)
-			{
-				drawCard(currentPlayer, state);
-			}
-
-			//discard card from hand
-			discardCard(handPos, currentPlayer, state, 0);
+			smithyEffect(state, currentPlayer, handPos);
 			return 0;
 
 		case village:
