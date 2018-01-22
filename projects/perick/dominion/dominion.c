@@ -823,7 +823,36 @@ void villageEffect(struct gameState *state, int currentPlayer, int handPos)
 }
 
 
+/*
+ * great_hallEffect()
+ *
+ * @params
+ * 		struct gameState	*state				state of the game.
+ * 		int					currentPlayer		the current player.
+ * 		int					handPos				hand position of great_hall card.
+ *
+ * @pre
+ * 		intialized game, current player selected.
+ * 
+ * @post
+ * 		adjusted game state in accordance to effect of card.
+ *
+ * @desc
+ * 		Plays the great_hall card.  It's an action card in which the player draws 
+ * 		1 card from the player's deck, and allows one more actions on the 
+ * 		player's turn.
+ */
+void great_hallEffect(struct gameState *state, int currentPlayer, int handPos)
+{
+	/* +1 Card */
+	drawCard(currentPlayer, state);
 
+	/* +1 Actions */
+	state->numActions++;
+
+	/*i discard card from hand. */
+	discardCard(handPos, currentPlayer, state, 0);
+}
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
@@ -1042,14 +1071,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			return 0;
 
 		case great_hall:
-			//+1 Card
-			drawCard(currentPlayer, state);
-
-			//+1 Actions
-			state->numActions++;
-
-			//discard card from hand
-			discardCard(handPos, currentPlayer, state, 0);
+			great_hallEffect(state, currentPlayer, handPos);
 			return 0;
 
 		case minion:
