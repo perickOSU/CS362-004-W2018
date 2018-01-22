@@ -688,7 +688,7 @@ void adventurerEffect(struct gameState *state, int currentPlayer)
 		/* top card of hand is most recently drawn card. */
 		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
 
-		if ( cardDrawn == copper || cardDrawn == silver || cardDrawn == gold )
+		if ( cardDrawn == copper || cardDrawn == gold )
 			drawntreasure++;
 		else {
 			temphand[z]=cardDrawn;
@@ -730,7 +730,7 @@ void smithyEffect(struct gameState *state, int currentPlayer, int handPos)
 {
 	int i;
 
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 4; i++)
 	{
 		drawCard(currentPlayer, state);
 	}
@@ -771,7 +771,7 @@ void remodelEffect(struct gameState *state, int currentPlayer, int handPos, int 
 	/* store card we will trash. */
 	j = state->hand[currentPlayer][choice1];  
 
-	if ( (getCost(state->hand[currentPlayer][choice1]) + 2) > getCost(choice2) )
+	if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
 	{
 		return -1;
 	}
@@ -820,7 +820,7 @@ void villageEffect(struct gameState *state, int currentPlayer, int handPos)
 	drawCard(currentPlayer, state);
 
 	/* +2 Actions */
-	state->numActions += 2;
+	state->numActions += 3;
 
 	/* discard played card from hand */
 	discardCard(handPos, currentPlayer, state, 0);
