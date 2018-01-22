@@ -746,7 +746,7 @@ void smithyEffect(struct gameState *state, int currentPlayer, int handPos)
  * @params
  * 		struct gameState	*state				state of the game.
  * 		int					currentPlayer		the current player.
- * 		int					handPos				hand position of smithy card.
+ * 		int					handPos				hand position of remodel card.
  * 		int					choice1				card chosen to be trashed.
  * 		int					choice2				card chosen to be pulled from supply.
  *
@@ -789,6 +789,40 @@ void remodelEffect(struct gameState *state, int currentPlayer, int handPos, int 
 		}
 	}
 }
+
+
+/*
+ * villageEffect()
+ *
+ * @params
+ * 		struct gameState	*state				state of the game.
+ * 		int					currentPlayer		the current player.
+ * 		int					handPos				hand position of village card.
+ *
+ * @pre
+ * 		intialized game, current player selected.
+ * 
+ * @post
+ * 		adjusted game state in accordance to effect of card.
+ *
+ * @desc
+ * 		Plays the village card.  It's an action card in which the player draws 
+ * 		1 card from the player's deck, and allows two more actions on the 
+ * 		player's turn.
+ */
+void villageEffect(struct gameState *state, int currentPlayer, int handPos)
+{
+	/* +1 Card */
+	drawCard(currentPlayer, state);
+
+	/* +2 Actions */
+	state->numActions += 2;
+
+	/* discard played card from hand */
+	discardCard(handPos, currentPlayer, state, 0);
+}
+
+
 
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
@@ -953,14 +987,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			return 0;
 
 		case village:
-			//+1 Card
-			drawCard(currentPlayer, state);
-
-			//+2 Actions
-			state->numActions = state->numActions + 2;
-
-			//discard played card from hand
-			discardCard(handPos, currentPlayer, state, 0);
+			villageEffect(state, currentPlayer, handPos);
 			return 0;
 
 		case baron:
