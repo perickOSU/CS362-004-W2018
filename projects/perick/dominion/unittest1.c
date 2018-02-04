@@ -19,9 +19,6 @@
 #include "rngs.h"
 
 
-/* set NOISY_TEST to 0 to remove printfs from output. */
-#define NOISY_TEST 1
-
 #define ARR_LEN(x) ( sizeof(x) / sizeof(x[0]) )
 
 
@@ -29,6 +26,41 @@ struct playerConfig {
 	int player;
 	int numPlayers;
 };
+
+
+
+
+/*
+ * assertTrue()
+ *
+ * 	@desc
+ *		assert that the game state is altered such that
+ *		G.coins = handSize * currency_value + bonus for the
+ *		respective handCount and currency value of the 
+ *		treasury being tested.
+ *
+ *	@params
+ *		struct 	gameState G		state with one player with hand config.
+ *		int		handCount
+ *		int		coinValue		for single value tests
+ *		int		bonus			bonus amount
+ *
+ *	@outputs
+ *		prints test failure report
+ */
+int assertTrue(struct gameState *G, int handCount, int coinValue, int bonus)
+{
+	if (G->coins != handCount * coinValue + bonus) {
+		printf("G->coins: %d\nhandCount: %d\n: coinValue: %d\nbonus: %d\n",
+										G->coins, handCount, coinValue, bonus);
+		return -1;
+	} else {
+		return 0;
+	}
+}
+
+
+
 
 int main()
 {
@@ -38,6 +70,7 @@ int main()
 	int k[10] = {adventurer, council_room, feast, gardens, mine
 								, remodel, smithy, village, baron, great_hall};
 	struct gameState G;
+	int res = 0;							/* for test results */
 
 
 	/* 
@@ -102,14 +135,15 @@ int main()
 					 * respective handCount and currency value of the 
 					 * treasury being tested.
 					 */
-					assert(G.coins == handSize[j] * coinValue[h] + bonus);
-//					printf("G.coins = %d, expected = %d\n", G.coins, handSize[j] * 1 + 2);
+					if (assertTrue(&G, handSize[j], coinValue[h], bonus) < 0) {
+						res = -1;
 					}
+				}
 			}
 		}
 	}
 	
-	
-	printf("All tests passed!\n");
+	if (res == 0) { printf("All tests passed!\n"); }
+
 	return 0;
 }
