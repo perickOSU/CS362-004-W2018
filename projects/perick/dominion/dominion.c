@@ -1466,6 +1466,29 @@ int gainCard(int supplyPos, struct gameState *state, int toFlag, int player)
 	return 0;
 }
 
+
+
+/*
+ * updateCoins()
+ *
+ * 	@desc
+ * 		computes the number of coins a player has for a hand based on
+ * 		the number of treasury cards and bonus amount.
+ *
+ * 	@params
+ * 		int		player					The player of the hand.
+ * 		struct gameState*	state
+ * 		int		bonus					Bonus amount.
+ *
+ * 	@pre
+ * 		a hand for the player.
+ *
+ * 	@post
+ * 		update state->coins to equal the number of coins in the player's hand.
+ *
+ * 	@return
+ * 		none.
+ */
 int updateCoins(int player, struct gameState *state, int bonus)
 {
 	int i;

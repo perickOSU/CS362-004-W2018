@@ -24,16 +24,33 @@ testAll: dominion.o testSuite.c
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
+
+unittest1: unittest1.c dominion.o rngs.o
+	gcc  -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
+
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
 
+
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player testDrawCard testBuyCard badTestDrawCard
+unittestresults.out: unittest1
+	./unittest1 > unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOTS ============\n\n" >> unittestresults.out
+	printf "updateCoints function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/updateCoins/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	printf "\n\n========== FULL DOMINION COVERAGE REPORT ==========\n\n" >> unittestresults.out
+	printf "\n\ndominion.c Overall Summary:\n\n" >> unittestresults.out
+	gcov dominion.c -abcu >> unittestresults.out
+	printf "\n\ndominion.c Functional Summary:\n\n" >> unittestresults.out
+	gcov dominion.c -abcuf >> unittestresults.out
+
+all: playdom player testDrawCard testBuyCard badTestDrawCard testUpdateCoins
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe

@@ -1,0 +1,172 @@
+TESTING updateCoins():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOTS ============
+
+updateCoints function:
+Lines executed:100.00% of 11
+No branches
+No calls
+
+
+
+========== FULL DOMINION COVERAGE REPORT ==========
+
+
+
+dominion.c Overall Summary:
+
+File 'dominion.c'
+Lines executed:17.38% of 564
+Branches executed:16.46% of 413
+Taken at least once:14.77% of 413
+Calls executed:7.37% of 95
+Creating 'dominion.c.gcov'
+
+
+
+dominion.c Functional Summary:
+
+Function 'updateCoins'
+Lines executed:100.00% of 11
+No branches
+No calls
+
+Function 'gainCard'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'discardCard'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'cardEffect'
+Lines executed:0.00% of 210
+No branches
+No calls
+
+Function 'great_hallEffect'
+Lines executed:0.00% of 5
+No branches
+No calls
+
+Function 'villageEffect'
+Lines executed:0.00% of 5
+No branches
+No calls
+
+Function 'remodelEffect'
+Lines executed:0.00% of 10
+No branches
+No calls
+
+Function 'smithyEffect'
+Lines executed:0.00% of 5
+No branches
+No calls
+
+Function 'adventurerEffect'
+Lines executed:0.00% of 17
+No branches
+No calls
+
+Function 'getCost'
+Lines executed:0.00% of 30
+No branches
+No calls
+
+Function 'drawCard'
+Lines executed:36.36% of 22
+No branches
+No calls
+
+Function 'getWinners'
+Lines executed:0.00% of 24
+No branches
+No calls
+
+Function 'scoreFor'
+Lines executed:0.00% of 24
+No branches
+No calls
+
+Function 'isGameOver'
+Lines executed:0.00% of 10
+No branches
+No calls
+
+Function 'endTurn'
+Lines executed:0.00% of 20
+No branches
+No calls
+
+Function 'whoseTurn'
+Lines executed:0.00% of 2
+No branches
+No calls
+
+Function 'fullDeckCount'
+Lines executed:0.00% of 9
+No branches
+No calls
+
+Function 'supplyCount'
+Lines executed:0.00% of 2
+No branches
+No calls
+
+Function 'handCard'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'numHandCards'
+Lines executed:0.00% of 2
+No branches
+No calls
+
+Function 'buyCard'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'playCard'
+Lines executed:0.00% of 14
+No branches
+No calls
+
+Function 'shuffle'
+Lines executed:93.75% of 16
+No branches
+No calls
+
+Function 'initializeGame'
+Lines executed:95.16% of 62
+No branches
+No calls
+
+Function 'kingdomCards'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'newGame'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'compare'
+Lines executed:83.33% of 6
+No branches
+No calls
+
+File 'dominion.c'
+Lines executed:17.38% of 564
+Branches executed:16.46% of 413
+Taken at least once:14.77% of 413
+Calls executed:7.37% of 95
+Creating 'dominion.c.gcov'
+
