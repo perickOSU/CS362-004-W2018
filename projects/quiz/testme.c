@@ -3,16 +3,39 @@
 #include<stdlib.h>
 #include<time.h>
 
+/*
+ * @desc
+ * 	tester for testme().  
+ */
+
+/*
+ * inputChar()
+ *
+ * 	@desc
+ * 		returns a random byte from domian {[,(,{, ,a,x,},),]".
+ */
 char inputChar()
 {
-    // TODO: rewrite this function
-    return ' ';
+	char *domain = "[({ ax})]";
+	int len = strlen(domain);
+    return domain[rand() % len];
 }
 
+/*
+ * inputString()
+ *
+ * 	@desc
+ * 		returns a 5 character long string (not include 
+ * 		\n char) of random bytes from domian {r,e,s,t}.
+ */
 char *inputString()
 {
-    // TODO: rewrite this function
-    return "";
+	int i;
+	char *domain = "rest";
+	int len = strlen(domain);
+	static char s[6] = "\0\0\0\0\0";
+	for (i=0; i<5; i++) { s[i] = domain[rand() % len]; }
+	return s;
 }
 
 void testme()
