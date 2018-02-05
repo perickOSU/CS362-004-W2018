@@ -20,6 +20,28 @@ Lines executed:100.00% of 30
 No branches
 No calls
 
+TESTING whoseTurn():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+whoseTurn function:
+Lines executed:100.00% of 2
+No branches
+No calls
+
+TESTING numHandCards():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+numHandCards function:
+Lines executed:100.00% of 2
+No branches
+No calls
+
 
 
 ========== FULL DOMINION COVERAGE REPORT ==========
@@ -29,15 +51,15 @@ No calls
 dominion.c Overall Summary:
 
 File 'dominion.c'
-Lines executed:22.70% of 564
+Lines executed:23.40% of 564
 Branches executed:23.24% of 413
 Taken at least once:21.55% of 413
-Calls executed:7.37% of 95
+Calls executed:8.42% of 95
 Creating 'dominion.c.gcov'
 
 
 
-dominion.c Functional Summary:
+dominion.c Function Break-Down Summary:
 
 Function 'updateCoins'
 Lines executed:100.00% of 11
@@ -115,7 +137,7 @@ No branches
 No calls
 
 Function 'whoseTurn'
-Lines executed:0.00% of 2
+Lines executed:100.00% of 2
 No branches
 No calls
 
@@ -135,7 +157,7 @@ No branches
 No calls
 
 Function 'numHandCards'
-Lines executed:0.00% of 2
+Lines executed:100.00% of 2
 No branches
 No calls
 
@@ -175,9 +197,9 @@ No branches
 No calls
 
 File 'dominion.c'
-Lines executed:22.70% of 564
+Lines executed:23.40% of 564
 Branches executed:23.24% of 413
 Taken at least once:21.55% of 413
-Calls executed:7.37% of 95
+Calls executed:8.42% of 95
 Creating 'dominion.c.gcov'
 
