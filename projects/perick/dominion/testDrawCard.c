@@ -10,32 +10,72 @@
 
 int checkDrawCard(int p, struct gameState *post) {
 	struct gameState pre;
+
+	/* 
+	 * copy the pre came state to post.  This was we can see what the game state
+	 * was prior to calling drawCard...
+	 */
 	memcpy (&pre, post, sizeof(struct gameState));
 
 	int r;
 	//  printf ("drawCard PRE: p %d HC %d DeC %d DiC %d\n",
 	//	  p, pre.handCount[p], pre.deckCount[p], pre.discardCount[p]);
 
+	/* run on post */
 	r = drawCard (p, post);
 
 	//printf ("drawCard POST: p %d HC %d DeC %d DiC %d\n",
 	//      p, post->handCount[p], post->deckCount[p], post->discardCount[p]);
 
+	/*
+	 * much stronger test oracle...
+	 *
+	 * 	We are essentially going to do what drawCard should do.
+	 */
+
+	/*
+	 * if the previous deck count was great than zero, then drawCard should
+	 * draw from the player's deck...  We somewhat trust that drawCard handles
+	 * other things like shuffling the deck, but we check that it gives the 
+	 * correct results.
+	 */
 	if (pre.deckCount[p] > 0) {
+		/* player draws a card from the deck... */
 		pre.handCount[p]++;
 		pre.hand[p][pre.handCount[p]-1] = pre.deck[p][pre.deckCount[p]-1];
 		pre.deckCount[p]--;
+
+		/*
+		 * otherwise, if the discard count was greater than zero, draw from it...
+		 */
 	} else if (pre.discardCount[p] > 0) {
+		/*
+		 * copy post deck and discard to pre.
+		 */
 		memcpy(pre.deck[p], post->deck[p], sizeof(int) * pre.discardCount[p]);
 		memcpy(pre.discard[p], post->discard[p], sizeof(int)*pre.discardCount[p]);
+
+		/* set the hand count of pre */
 		pre.hand[p][post->handCount[p]-1] = post->hand[p][post->handCount[p]-1];
+
+		/* increment the hand count */
 		pre.handCount[p]++;
+
+		/* decriment the deck count */
 		pre.deckCount[p] = pre.discardCount[p]-1;
+
+		/* set the discardCount as empty */
 		pre.discardCount[p] = 0;
-	}
+	} /* if you deck and discount are BOTH EMPTY, 
+
+		 drawCard does NOTHING.  we check this too...
+		 */
 
 	assert (r == 0);
 
+	/*
+	 * the pre and post should be the SAME.
+	 */
 	assert(memcmp(&pre, post, sizeof(struct gameState)) == 0);
 }
 
@@ -70,6 +110,11 @@ int main () {
 
 	exit(0);
 
+
+	/*
+	 * fixed test to cover empty decks and empty discards...  but you can also
+	 * just increase the number of tests...
+	 */
 	printf ("SIMPLE FIXED TESTS.\n");
 	for (p = 0; p < 2; p++) {
 		for (deckCount = 0; deckCount < 5; deckCount++) {

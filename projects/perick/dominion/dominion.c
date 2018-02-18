@@ -208,6 +208,7 @@ int shuffle(int player, struct gameState *state) {
 
 	if (state->deckCount[player] < 1)
 		return -1;
+
 	qsort ((void*)(state->deck[player]), state->deckCount[player], sizeof(int), compare); 
 	/* SORT CARDS IN DECK TO ENSURE DETERMINISM! */
 
@@ -522,59 +523,90 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state) {
 	return 0;
 }
 
-int drawCard(int player, struct gameState *state)
-{	int count;
-	int deckCounter;
-	if (state->deckCount[player] <= 0){//Deck is empty
 
-		//Step 1 Shuffle the discard pile back into a deck
+/*
+ * drawCard()
+ *
+ * 	@desc
+ *
+ * 		Draws a card from the player's deck into the player's hand.
+ *
+ *	@pre
+ *		
+ *		intialized game state.
+ *
+ *	@post
+ *		
+ *		if the deck was empty, the discard will be moved to the deck and the
+ *		discard will therefore be empty.  The deck is shuffled.
+ */
+int drawCard(int player, struct gameState *state)
+{
+	int count;
+	int deckCounter;
+
+	/*
+	 * In the case that the player's deck is empty, the discard pile
+	 * will need to be moved to the deck pile and shuffled.
+	 */
+	if (state->deckCount[player] <= 0) {
+
+		/* 
+		 * move the discard pile over to the deck and update the counts
+		 * of the deck an discard accordingly.  Then shuffle the deck.
+		 */
 		int i;
-		//Move discard to deck
-		for (i = 0; i < state->discardCount[player];i++){
+		for (i=0; i < state->discardCount[player]; i++) {
 			state->deck[player][i] = state->discard[player][i];
 			state->discard[player][i] = -1;
 		}
 
 		state->deckCount[player] = state->discardCount[player];
-		state->discardCount[player] = 0;//Reset discard
+		state->discardCount[player] = 0;
 
-		//Shufffle the deck
-		shuffle(player, state);//Shuffle the deck up and make it so that we can draw
+		shuffle(player, state);
 
 		if (DEBUG){//Debug statements
 			printf("Deck count now: %d\n", state->deckCount[player]);
 		}
 
-		state->discardCount[player] = 0;
+		state->discardCount[player] = 0;	/* TODO: redundant line? omit? */
 
-		//Step 2 Draw Card
-		count = state->handCount[player];//Get current player's hand count
+		
+		/*
+		 * Move the last card out of the deck to the end of the player's hand.  
+		 * Update the count of the deck and hand accordingly.
+		 */	
+		count = state->handCount[player];
 
 		if (DEBUG){//Debug statements
 			printf("Current hand count: %d\n", count);
 		}
 
-		deckCounter = state->deckCount[player];//Create a holder for the deck count
+		deckCounter = state->deckCount[player];
 
 		if (deckCounter == 0)
 			return -1;
 
-		state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to hand
+		state->hand[player][count] = state->deck[player][deckCounter - 1];
 		state->deckCount[player]--;
-		state->handCount[player]++;//Increment hand count
+		state->handCount[player]++;
 	}
-
-	else{
-		int count = state->handCount[player];//Get current hand count for player
+	else {
+		int count = state->handCount[player];
 		int deckCounter;
 		if (DEBUG){//Debug statements
 			printf("Current hand count: %d\n", count);
 		}
 
-		deckCounter = state->deckCount[player];//Create holder for the deck count
-		state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
+		/*
+		 * Move the last card out of the deck to the end of the player's hand.  
+		 * Update the count of the deck and hand accordingly.
+		 */	
+		deckCounter = state->deckCount[player];
+		state->hand[player][count] = state->deck[player][deckCounter - 1];
 		state->deckCount[player]--;
-		state->handCount[player]++;//Increment hand count
+		state->handCount[player]++;
 	}
 
 	return 0;
@@ -688,7 +720,7 @@ void adventurerEffect(struct gameState *state, int currentPlayer)
 		/* top card of hand is most recently drawn card. */
 		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
 
-		if ( cardDrawn == copper || cardDrawn == gold )
+		if ( cardDrawn == copper || cardDrawn == gold || cardDrawn == silver )	/* TODO: put bug back... */
 			drawntreasure++;
 		else {
 			temphand[z]=cardDrawn;
