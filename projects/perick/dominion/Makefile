@@ -52,6 +52,59 @@ cardtest4: cardtest4.c dominion.o rngs.o
 randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 	gcc  -o randomtestadventurer -g  randomtestadventurer.c dominion.o rngs.o  $(CFLAGS)
 
+randomtestcard1: randomtestcard1.c dominion.o rngs.o
+	gcc  -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o  $(CFLAGS)
+
+randomtestcard2: randomtestcard2.c dominion.o rngs.o
+	gcc  -o randomtestcard2 -g  randomtestcard2.c dominion.o rngs.o  $(CFLAGS)
+
+randomtestadventurer.out: randomtestadventurer
+	@chmod +x ./runAdventurer
+	./runAdventurer
+	@printf "=========== UNIT TEST COVERAGE REPOT ============\n" >> randomtestadventurer.out
+	@printf "adventurerEffect function:\n" >> randomtestadventurer.out
+	@gcov -bf dominion.c | sed -n '/adventurerEffect/{n;p; n;p; n;p; n;p}' >> randomtestadventurer.out
+	@printf "\n\n\n=========== TEST PROGRAM OUTPUT ============\n\n\n" >> randomtestadventurer.out
+	@cat temp >> randomtestadventurer.out
+	@rm -f temp
+	@printf "\033[32mCoverage Report for adventurerEffect\033[0m\n";
+	@printf "\033[35mSee full report in randomtestadventurer.out\033[0m\n";
+	head randomtestadventurer.out
+	@printf "\n\033[31;1mNOTE: If you remove the cooked-up Assignment-2 bug in \n \
+	adventurerEffect which causes silver cards to be discarded rather than drawn, \n \
+	the error ouput is drastically reduced. But I left it in per assignment spec\033[0m\n\n\n"
+
+randomtestcard1.out: randomtestcard1
+	@chmod +x ./runSmithy
+	./runSmithy
+	@printf "=========== UNIT TEST COVERAGE REPOT ============\n" >> randomtestcard1.out
+	@printf "smithyEffect function:\n" >> randomtestcard1.out
+	@gcov -bf dominion.c | sed -n '/smithyEffect/{n;p; n;p; n;p; n;p}' >> randomtestcard1.out
+	@printf "\n\n\n=========== TEST PROGRAM OUTPUT ============\n\n\n" >> randomtestcard1.out
+	@cat temp >> randomtestcard1.out
+	@rm -f temp
+	@printf "\033[32mCoverage Report for smithyEffect\033[0m\n";
+	@printf "\033[35mSee full report in randomtestcard1.out\033[0m\n";
+	head randomtestcard1.out
+	@printf "\n\033[31;1mNOTE: The coocked up Assignment 2 bug triggers erros\n \
+		on every run...\033[0m\n\n\n"
+
+randomtestcard2.out: randomtestcard2
+	@chmod +x ./runVillage
+	./runVillage
+	@printf "=========== UNIT TEST COVERAGE REPOT ============\n" >> randomtestcard2.out
+	@printf "villageEffect function:\n" >> randomtestcard2.out
+	@gcov -bf dominion.c | sed -n '/villageEffect/{n;p; n;p; n;p; n;p}' >> randomtestcard2.out
+	@printf "\n\n\n=========== TEST PROGRAM OUTPUT ============\n\n\n" >> randomtestcard2.out
+	@cat temp >> randomtestcard2.out
+	@rm -f temp
+	@printf "\033[32mCoverage Report for villageEffect\033[0m\n";
+	@printf "\033[35mSee full report in randomtestcard2.out\033[0m\n";
+	head randomtestcard2.out
+	@printf "\n\033[31;1mNOTE: The coocked up Assignment 2 bug triggers erros\n \
+		on every run...\033[0m\n\n\n"
+
+
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out

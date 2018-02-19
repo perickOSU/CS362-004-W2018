@@ -720,7 +720,7 @@ void adventurerEffect(struct gameState *state, int currentPlayer)
 		/* top card of hand is most recently drawn card. */
 		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
 
-		if ( cardDrawn == copper || cardDrawn == gold || cardDrawn == silver )	/* TODO: put bug back... */
+		if ( cardDrawn == copper || cardDrawn == gold)// || cardDrawn == silver )	/* TODO: put bug back... */
 			drawntreasure++;
 		else {
 			temphand[z]=cardDrawn;
@@ -762,7 +762,7 @@ void smithyEffect(struct gameState *state, int currentPlayer, int handPos)
 {
 	int i;
 
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 4; i++)
 	{
 		drawCard(currentPlayer, state);
 	}
@@ -1425,7 +1425,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
 int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
 {
-
 	//if card is not trashed, added to Played pile 
 	if (trashFlag < 1)
 	{

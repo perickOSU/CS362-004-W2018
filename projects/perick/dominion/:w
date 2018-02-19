@@ -5,7 +5,7 @@
  *
  * @desc
  * 		
- *	Adventurer effect tester
+ *	Smithy effect tester
  */
 
 #include "dominion.h"
@@ -16,115 +16,26 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define NUM_TESTS	5000
-#define NUM_CARD_T	26
+#define NUM_TESTS				1
+#define NUM_MINIMIZED_TESTS		1
+#define NUM_CARD_T				26
 
 //#define NOISY
 #define BUG printf("-----  ERROR -----\n"); isError = true;
 
 
-/*
- * @pre
- * 	int i, j must be in scope.
- *
- * @post
- * 	i and j will be written to.  number of <type> cards in <pile> will be
- * 	counted.
- */
-#define countTreasure(pile, type) \
-{ \
-	for (i=0; i<G->pile ## Count[G->whoseTurn]; i++) { \
-		if (G->pile[G->whoseTurn][i] == type) { counts->pile.type++; } \
-	} \
-}
-
-/*
- * @pre
- * 	counts array
- *
- * @post
- * 	none
- */
-#define pileSum(counts, pile) \
-(\
-	counts.pile.copper + counts.pile.silver + counts.pile.gold \
-)
-
-
-/*
- * @pre
- * 	pre and post counts arrays
- *
- * @post
- * 	none
- */
-#define diffTreasure(pile, type)\
-(\
-	countsPre.pile.type - countsPost.pile.type \
-)
-
-
-/*
- * @pre
- * 	populated struct treasureCounts with numTreasure()
- *
- * @post
- * 	none
- */
-#define treasurePrinter(pile, pileStr)\
-{\
-	printf(pileStr "\t (copper, silver, gold) : (%3.d, \t%3.d, \t%3.d)\n", \
-		counts->pile.copper, counts->pile.silver, counts->pile.gold); \
-}
-
-
-
-
-enum PILE { deck, hand, discard };
-
-struct treasureCounts {
-	int copper;
-	int silver;
-	int gold;
-};
-void initTreasureCounts(struct treasureCounts *c)
-{
-	c->copper = 0;
-	c->silver = 0;
-	c->gold = 0;
-}
-
-struct pileTreasureCounts {
-	struct treasureCounts deck;
-	struct treasureCounts hand;
-	struct treasureCounts discard;
-};
-void initPileTreasureCounts(struct pileTreasureCounts *C)
-{
-	initTreasureCounts(&(C->deck));
-	initTreasureCounts(&(C->hand));
-	initTreasureCounts(&(C->discard));
-}
-
-
-
 void testOracle(struct gameState* post);
-int totalTreasure(struct pileTreasureCounts *counts);
-void numTreasure(struct gameState *G, struct pileTreasureCounts *counts);
-void treasureReport(struct pileTreasureCounts *counts);
-
 
 
 int main()
 {
-	int i, j, t;
 	struct gameState G;	
 
 	SelectStream(2);
 	PutSeed(10);
 
 	/*
-	 * Intialize and run NUM_TESTS random tests on adventurerEffect().
+	 * Intialize and run NUM_TESTS random tests on smithyEffect().
 	 */
 	printf("-------RUNNING ADVENTURER CARD RANDOM TEST-------\n\n");
 	for (t=0; t<NUM_TESTS; t++) {
@@ -219,17 +130,6 @@ void testOracle(struct gameState* post)
 
 
 #ifdef NOISY
-	printf("pre gameState treasure info:\n");
-	printf("deckCount: %d\n", pre.deckCount[pre.whoseTurn]);
-	printf("handCount: %d\n", pre.handCount[pre.whoseTurn]);
-	printf("discardCount: %d\n", pre.discardCount[pre.whoseTurn]);
-
-	treasureReport(&countsPre);
-	printf("total for player: %d\n", totalsPre);
-
-	printf("post gameState treasure info:\n");
-	treasureReport(&countsPost);
-	printf("total for player: %d\n", totalsPost);
 #endif
 	
 	int treasureAvailable = pileSum(countsPre, deck) +
@@ -392,58 +292,4 @@ void testOracle(struct gameState* post)
 		treasureReport(&countsPost);
 		printf("=============END ERRORS==================\n\n\n\n");
 	}
-}
-
-
-/*
- * numTreasure()
- *
- * 	@desc
- * 		
- * 		counts how many <type> treasure cards are in <pile>.
- *
- * 	@params
- *
- * 		struct gameState			*G
- * 		struct pileTreasureCounts	**counts
- *
- * 	@returns
- * 		
- * 		count of how many <type> cards.
- */
-void numTreasure(struct gameState *G, struct pileTreasureCounts *counts)
-{
-	int i;
-	initPileTreasureCounts(counts);
-
-	countTreasure(deck, 	copper);
-	countTreasure(hand, 	copper);
-	countTreasure(discard, 	copper);
-	countTreasure(deck, 	silver);
-	countTreasure(hand, 	silver);
-	countTreasure(discard, 	silver);
-	countTreasure(deck, 	gold);
-	countTreasure(hand, 	gold);
-	countTreasure(discard, 	gold);
-}
-
-int totalTreasure(struct pileTreasureCounts *counts)
-{
-	return 
-		counts->deck.copper + counts->deck.silver + counts->deck.gold +
-		counts->hand.copper + counts->hand.silver + counts->hand.gold +
-		counts->discard.copper + counts->discard.silver + counts->discard.gold;
-}
-
-
-/*
- * treasureReport()
- *
- * 	@prints treasure diff pre vs post state
- */
-void treasureReport(struct pileTreasureCounts *counts)
-{
-	treasurePrinter(deck,		"deck")
-	treasurePrinter(hand,		"hand")
-	treasurePrinter(discard,	"discard")
 }
