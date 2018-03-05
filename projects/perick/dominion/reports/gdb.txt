@@ -1,0 +1,291 @@
++break dominion.c 764
+Function "dominion.c 764" not defined.
++break dominion.c smithyEffect 
+Function "dominion.c smithyEffect" not defined.
++break smithyEffect 
+Breakpoint 1 at 0x4d55: file dominion.c, line 765.
++run
+Starting program: /home/kruno/kperic777@gmail.com/osu/cs362/CS362-004-W2018/projects/perick/dominion/cardtest1 
+
+Breakpoint 1, smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++watch i
+Hardware watchpoint 2: i
++watch state->handCount[currentPlayer]
+Hardware watchpoint 3: state->handCount[currentPlayer]
++step
+
+Hardware watchpoint 2: i
+
+Old value = 32767
+New value = 0
+0x0000555555558d5c in smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+767			drawCard(currentPlayer, state);
++step
+drawCard (player=0, state=0x7fffffff10c0) at dominion.c:552
+552		if (state->deckCount[player] <= 0) {
++step
+596			int count = state->handCount[player];
++step
+606			deckCounter = state->deckCount[player];
++step
+607			state->hand[player][count] = state->deck[player][deckCounter - 1];
++step
+608			state->deckCount[player]--;
++step
+609			state->handCount[player]++;
++step
+
+Hardware watchpoint 3: state->handCount[currentPlayer]
+
+Old value = 5
+New value = 6
+0x00005555555587a4 in drawCard (player=0, state=0x7fffffff10c0) at dominion.c:609
+609			state->handCount[player]++;
++step
+612		return 0;
++step
+613	}
++step
+smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+
+Hardware watchpoint 2: i
+
+Old value = 0
+New value = 1
+0x0000555555558d85 in smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+767			drawCard(currentPlayer, state);
++step
+drawCard (player=0, state=0x7fffffff10c0) at dominion.c:552
+552		if (state->deckCount[player] <= 0) {
++step
+596			int count = state->handCount[player];
++step
+606			deckCounter = state->deckCount[player];
++step
+607			state->hand[player][count] = state->deck[player][deckCounter - 1];
++step
+608			state->deckCount[player]--;
++step
+609			state->handCount[player]++;
++step
+
+Hardware watchpoint 3: state->handCount[currentPlayer]
+
+Old value = 6
+New value = 7
+0x00005555555587a4 in drawCard (player=0, state=0x7fffffff10c0) at dominion.c:609
+609			state->handCount[player]++;
++step
+612		return 0;
++step
+613	}
++step
+smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+
+Hardware watchpoint 2: i
+
+Old value = 1
+New value = 2
+0x0000555555558d85 in smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+767			drawCard(currentPlayer, state);
++step
+drawCard (player=0, state=0x7fffffff10c0) at dominion.c:552
+552		if (state->deckCount[player] <= 0) {
++step
+596			int count = state->handCount[player];
++step
+606			deckCounter = state->deckCount[player];
++step
+607			state->hand[player][count] = state->deck[player][deckCounter - 1];
++step
+608			state->deckCount[player]--;
++step
+609			state->handCount[player]++;
++step
+
+Hardware watchpoint 3: state->handCount[currentPlayer]
+
+Old value = 7
+New value = 8
+0x00005555555587a4 in drawCard (player=0, state=0x7fffffff10c0) at dominion.c:609
+609			state->handCount[player]++;
++step
+612		return 0;
++step
+613	}
++step
+smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+
+Hardware watchpoint 2: i
+
+Old value = 2
+New value = 3
+0x0000555555558d85 in smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+767			drawCard(currentPlayer, state);
++step
+drawCard (player=0, state=0x7fffffff10c0) at dominion.c:552
+552		if (state->deckCount[player] <= 0) {
++step
+596			int count = state->handCount[player];
++step
+606			deckCounter = state->deckCount[player];
++step
+607			state->hand[player][count] = state->deck[player][deckCounter - 1];
++step
+608			state->deckCount[player]--;
++step
+609			state->handCount[player]++;
++step
+
+Hardware watchpoint 3: state->handCount[currentPlayer]
+
+Old value = 8
+New value = 9
+0x00005555555587a4 in drawCard (player=0, state=0x7fffffff10c0) at dominion.c:609
+609			state->handCount[player]++;
++step
+612		return 0;
++step
+613	}
++step
+smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+
+Hardware watchpoint 2: i
+
+Old value = 3
+New value = 4
+0x0000555555558d85 in smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++step
+771		discardCard(handPos, currentPlayer, state, 0);
++step
+discardCard (handPos=2, currentPlayer=0, state=0x7fffffff10c0, trashFlag=0) at dominion.c:1429
+1429		if (trashFlag < 1)
++step
+1432			state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos]; 
++step
+1433			state->playedCardCount++;
++step
+1437		state->hand[currentPlayer][handPos] = -1;
++step
+1440		if ( handPos == (state->handCount[currentPlayer] - 1) ) 	//last card in hand array is played
++step
+1445		else if ( state->handCount[currentPlayer] == 1 ) //only one card in hand
++step
+1453			state->hand[currentPlayer][handPos] = state->hand[currentPlayer][ (state->handCount[currentPlayer] - 1)];
++step
+1455			state->hand[currentPlayer][state->handCount[currentPlayer] - 1] = -1;
++step
+1457			state->handCount[currentPlayer]--;
++step
+
+Hardware watchpoint 3: state->handCount[currentPlayer]
+
+Old value = 9
+New value = 8
+0x000055555555b621 in discardCard (handPos=2, currentPlayer=0, state=0x7fffffff10c0, trashFlag=0) at dominion.c:1457
+1457			state->handCount[currentPlayer]--;
++step
+1460		return 0;
++step
+1461	}
++step
+smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:772
+772	}
++step
+
+Watchpoint 2 deleted because the program has left the block in
+which its expression is valid.
+
+Watchpoint 3 deleted because the program has left the block in
+which its expression is valid.
+cardEffect (card=13, choice1=0, choice2=0, choice3=0, state=0x7fffffff10c0, handPos=2, bonus=0x0) at dominion.c:1054
+1054				return 0;
++step
+1424	}
++step
+main () at cardtest1.c:178
+178			if (assertTrue(&preState, &postState) < 0) {
++step
+assertTrue (preState=0x7fffffff7780, postState=0x7fffffff10c0) at cardtest1.c:46
+46		int preSmithyNum = 0;
++step
+47		int postSmithyNum = 0;
++step
+49		int res = 0;
++step
+58		int whoseTurn = preState->whoseTurn;
++step
+59		assert(whoseTurn == postState->whoseTurn);
++step
+63		if (postState->handCount[whoseTurn] != preState->handCount[whoseTurn] + 2) {
++step
+64			printf("Incorrect hand count!\n");
++step
+_IO_puts (str=0x55555555e3a2 "Incorrect hand count!") at ioputs.c:33
+33	ioputs.c: No such file or directory.
++step
+35	in ioputs.c
++step
+strlen () at ../sysdeps/x86_64/strlen.S:66
+66	../sysdeps/x86_64/strlen.S: No such file or directory.
++step
+67	in ../sysdeps/x86_64/strlen.S
++step
+68	in ../sysdeps/x86_64/strlen.S
++step
+69	in ../sysdeps/x86_64/strlen.S
++step
+70	in ../sysdeps/x86_64/strlen.S
++continue 
+Continuing.
+
+Breakpoint 1, smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++continue 
+Continuing.
+
+Breakpoint 1, smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++continue 
+Continuing.
+
+Breakpoint 1, smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++continue 
+Continuing.
+
+Breakpoint 1, smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++continue 
+Continuing.
+
+Breakpoint 1, smithyEffect (state=0x7fffffff10c0, currentPlayer=0, handPos=2) at dominion.c:765
+765		for (i = 0; i < 4; i++)
++continue 
+Continuing.
+[Inferior 1 (process 31642) exited normally]
++continue 
+The program is not being run.
++continue 
+The program is not being run.
++continue 
+The program is not being run.
++Quit

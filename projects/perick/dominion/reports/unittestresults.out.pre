@@ -1,0 +1,532 @@
+TESTING updateCoins():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+updateCoints function:
+Lines executed:100.00% of 11
+No branches
+No calls
+
+TESTING getCost():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+getCost function:
+Lines executed:100.00% of 30
+No branches
+No calls
+
+TESTING whoseTurn():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+whoseTurn function:
+Lines executed:100.00% of 2
+No branches
+No calls
+
+TESTING numHandCards():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+numHandCards function:
+Lines executed:100.00% of 2
+No branches
+No calls
+
+TESTING smithy card:
+Incorrect hand count!
+postState.handCount = 8
+player deckCount mismatch!
+postState.deckCount = 1
+Discard pile did not incease by 1 card!
+postState.discardCount = 0
+failed test case was:
+
+numPlayers = 0
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 8
+player deckCount mismatch!
+postState.deckCount = 1
+Discard pile did not incease by 1 card!
+postState.discardCount = 0
+failed test case was:
+
+numPlayers = 1
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 8
+player deckCount mismatch!
+postState.deckCount = 1
+Discard pile did not incease by 1 card!
+postState.discardCount = 0
+failed test case was:
+
+numPlayers = 2
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 8
+player deckCount mismatch after discard pile shuffle!
+pre state discard count: 10
+post state deck count: 6
+player discardCount doesn't contain one card after a discard pile shuffle/transfer!
+
+failed test case was:
+
+numPlayers = 0
+handPos = 2
+deckCount = 0
+handCount = 5
+discardCount = 10
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 8
+player deckCount mismatch after discard pile shuffle!
+pre state discard count: 10
+post state deck count: 7
+player discardCount doesn't contain one card after a discard pile shuffle/transfer!
+
+failed test case was:
+
+numPlayers = 1
+handPos = 2
+deckCount = 1
+handCount = 5
+discardCount = 10
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 8
+player deckCount mismatch after discard pile shuffle!
+pre state discard count: 10
+post state deck count: 8
+player discardCount doesn't contain one card after a discard pile shuffle/transfer!
+
+failed test case was:
+
+numPlayers = 2
+handPos = 2
+deckCount = 2
+handCount = 5
+discardCount = 10
+-----END CASE----
+
+
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+smithy card effect function:
+Lines executed:100.00% of 5
+No branches
+No calls
+
+TESTING adventurer card:
+Incorrect treasure in post hand!
+(5,5)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+559
+post deck:
+
+Incorrect treasure in post hand!
+(5,5)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+559999
+post deck:
+
+Incorrect treasure in post hand!
+(5,5)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+99995999599
+post deck:
+
+Incorrect treasure in post hand!
+(5,5)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+99999999999999999999999999999999999999999999999999995999999999999999995999999999999999999999999999999
+post deck:
+
+Incorrect treasure in post hand!
+(5,0)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+51010
+post deck:
+
+Incorrect treasure in post hand!
+(5,0)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+51010101010
+post deck:
+
+Incorrect treasure in post hand!
+(5,0)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+101010101010101051010
+post deck:
+
+Incorrect treasure in post hand!
+(5,0)
+pre: 4 teasure, post: 4 treasure.
+pre hand:
+44744
+post hand:
+44744
+pre deck:
+101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010105101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010
+post deck:
+
+Incorrect treasure in post hand!
+(6,5)
+pre: 4 teasure, post: 7 treasure.
+pre hand:
+44744
+post hand:
+447446
+pre deck:
+6513
+post deck:
+
+Incorrect treasure in post hand!
+(6,5)
+pre: 4 teasure, post: 7 treasure.
+pre hand:
+44744
+post hand:
+447446
+pre deck:
+6513131313
+post deck:
+
+Incorrect treasure in post hand!
+(6,5)
+pre: 4 teasure, post: 7 treasure.
+pre hand:
+44744
+post hand:
+447446
+pre deck:
+13131313513131361313
+post deck:
+
+Incorrect treasure in post hand!
+(6,5)
+pre: 4 teasure, post: 7 treasure.
+pre hand:
+44744
+post hand:
+447446
+pre deck:
+13131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313613131313131313131313131313131313135131313131313131313131313131313131313131313131313131313131313
+post deck:
+
+Incorrect treasure in post hand!
+(5,4)
+pre: 4 teasure, post: 5 treasure.
+pre hand:
+44744
+post hand:
+447444
+pre deck:
+5415
+post deck:
+
+Incorrect treasure in post hand!
+(5,4)
+pre: 4 teasure, post: 5 treasure.
+pre hand:
+44744
+post hand:
+447444
+pre deck:
+5415151515
+post deck:
+
+Incorrect treasure in post hand!
+(5,4)
+pre: 4 teasure, post: 5 treasure.
+pre hand:
+44744
+post hand:
+447444
+pre deck:
+15151515415151551515
+post deck:
+
+Incorrect treasure in post hand!
+(5,4)
+pre: 4 teasure, post: 5 treasure.
+pre hand:
+44744
+post hand:
+447444
+pre deck:
+15151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515515151515151515151515151515151515154151515151515151515151515151515151515151515151515151515151515
+post deck:
+
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+adventurer card effect function:
+Lines executed:100.00% of 17
+No branches
+No calls
+
+TESTING great hall card:
+Discard pile did not incease by 1 card!
+Discard pile did not incease by 1 card!
+Discard pile did not incease by 1 card!
+Discard pile did not incease by 1 card!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+great hall card effect function:
+Lines executed:100.00% of 5
+No branches
+No calls
+
+TESTING village card:
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+village card effect function:
+Lines executed:100.00% of 5
+No branches
+No calls
+
+
+
+========== FULL DOMINION COVERAGE REPORT ==========
+
+
+
+dominion.c Overall Summary:
+
+File 'dominion.c'
+Lines executed:36.70% of 564
+Branches executed:33.90% of 413
+Taken at least once:27.60% of 413
+Calls executed:23.16% of 95
+Creating 'dominion.c.gcov'
+
+
+
+dominion.c Function Break-Down Summary:
+
+Function 'updateCoins'
+Lines executed:100.00% of 11
+No branches
+No calls
+
+Function 'gainCard'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'discardCard'
+Lines executed:84.62% of 13
+No branches
+No calls
+
+Function 'cardEffect'
+Lines executed:7.62% of 210
+No branches
+No calls
+
+Function 'great_hallEffect'
+Lines executed:100.00% of 5
+No branches
+No calls
+
+Function 'villageEffect'
+Lines executed:100.00% of 5
+No branches
+No calls
+
+Function 'remodelEffect'
+Lines executed:0.00% of 10
+No branches
+No calls
+
+Function 'smithyEffect'
+Lines executed:100.00% of 5
+No branches
+No calls
+
+Function 'adventurerEffect'
+Lines executed:100.00% of 17
+No branches
+No calls
+
+Function 'getCost'
+Lines executed:100.00% of 30
+No branches
+No calls
+
+Function 'drawCard'
+Lines executed:100.00% of 22
+No branches
+No calls
+
+Function 'getWinners'
+Lines executed:0.00% of 24
+No branches
+No calls
+
+Function 'scoreFor'
+Lines executed:0.00% of 24
+No branches
+No calls
+
+Function 'isGameOver'
+Lines executed:0.00% of 10
+No branches
+No calls
+
+Function 'endTurn'
+Lines executed:0.00% of 20
+No branches
+No calls
+
+Function 'whoseTurn'
+Lines executed:100.00% of 2
+No branches
+No calls
+
+Function 'fullDeckCount'
+Lines executed:0.00% of 9
+No branches
+No calls
+
+Function 'supplyCount'
+Lines executed:0.00% of 2
+No branches
+No calls
+
+Function 'handCard'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'numHandCards'
+Lines executed:100.00% of 2
+No branches
+No calls
+
+Function 'buyCard'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'playCard'
+Lines executed:0.00% of 14
+No branches
+No calls
+
+Function 'shuffle'
+Lines executed:100.00% of 16
+No branches
+No calls
+
+Function 'initializeGame'
+Lines executed:95.16% of 62
+No branches
+No calls
+
+Function 'kingdomCards'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'newGame'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'compare'
+Lines executed:83.33% of 6
+No branches
+No calls
+
+File 'dominion.c'
+Lines executed:36.70% of 564
+Branches executed:33.90% of 413
+Taken at least once:27.60% of 413
+Calls executed:23.16% of 95
+Creating 'dominion.c.gcov'
+
