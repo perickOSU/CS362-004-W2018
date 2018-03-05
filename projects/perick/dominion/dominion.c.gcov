@@ -1111,9 +1111,9 @@ unconditional  0 never executed
         -:  540: *		if the deck was empty, the discard will be moved to the deck and the
         -:  541: *		discard will therefore be empty.  The deck is shuffled.
         -:  542: */
-function drawCard called 13730 returned 100% blocks executed 100%
-    13730:  543:int drawCard(int player, struct gameState *state)
-    13730:  543-block  0
+function drawCard called 13724 returned 100% blocks executed 100%
+    13724:  543:int drawCard(int player, struct gameState *state)
+    13724:  543-block  0
         -:  544:{
         -:  545:	int count;
         -:  546:	int deckCounter;
@@ -1122,10 +1122,10 @@ function drawCard called 13730 returned 100% blocks executed 100%
         -:  549:	 * In the case that the player's deck is empty, the discard pile
         -:  550:	 * will need to be moved to the deck pile and shuffled.
         -:  551:	 */
-    13730:  552:	if (state->deckCount[player] <= 0) {
-    13730:  552-block  0
+    13724:  552:	if (state->deckCount[player] <= 0) {
+    13724:  552-block  0
 branch  0 taken 35 (fallthrough)
-branch  1 taken 13695
+branch  1 taken 13689
         -:  553:
         -:  554:		/* 
         -:  555:		 * move the discard pile over to the deck and update the counts
@@ -1186,9 +1186,9 @@ unconditional  0 taken 32
 unconditional  0 taken 3
         -:  594:	}
         -:  595:	else {
-    13695:  596:		int count = state->handCount[player];
-    13695:  596-block  0
-unconditional  0 taken 13695
+    13689:  596:		int count = state->handCount[player];
+    13689:  596-block  0
+unconditional  0 taken 13689
         -:  597:		int deckCounter;
         -:  598:		if (DEBUG){//Debug statements
         -:  599:			printf("Current hand count: %d\n", count);
@@ -1198,17 +1198,17 @@ unconditional  0 taken 13695
         -:  603:		 * Move the last card out of the deck to the end of the player's hand.  
         -:  604:		 * Update the count of the deck and hand accordingly.
         -:  605:		 */	
-    13695:  606:		deckCounter = state->deckCount[player];
-    13695:  607:		state->hand[player][count] = state->deck[player][deckCounter - 1];
-    13695:  608:		state->deckCount[player]--;
-    13695:  609:		state->handCount[player]++;
-    13695:  609-block  0
-unconditional  0 taken 13695
+    13689:  606:		deckCounter = state->deckCount[player];
+    13689:  607:		state->hand[player][count] = state->deck[player][deckCounter - 1];
+    13689:  608:		state->deckCount[player]--;
+    13689:  609:		state->handCount[player]++;
+    13689:  609-block  0
+unconditional  0 taken 13689
         -:  610:	}
         -:  611:
-    13698:  612:	return 0;
-    13698:  612-block  0
-unconditional  0 taken 13698
+    13692:  612:	return 0;
+    13692:  612-block  0
+unconditional  0 taken 13692
         -:  613:}
         -:  614:
 function getCost called 28 returned 100% blocks executed 100%
@@ -1481,17 +1481,17 @@ function smithyEffect called 6 returned 100% blocks executed 100%
         -:  762:{
         -:  763:	int i;
         -:  764:
-       30:  765:	for (i = 0; i < 4; i++)
+       24:  765:	for (i = 0; i < 3; i++)
         6:  765-block  0
 unconditional  0 taken 6
-unconditional  1 taken 24
-       30:  765-block  1
-branch  2 taken 24
+unconditional  1 taken 18
+       24:  765-block  1
+branch  2 taken 18
 branch  3 taken 6 (fallthrough)
         -:  766:	{
-       24:  767:		drawCard(currentPlayer, state);
-       24:  767-block  0
-call    0 returned 24
+       18:  767:		drawCard(currentPlayer, state);
+       18:  767-block  0
+call    0 returned 18
         -:  768:	}
         -:  769:
         -:  770:	/* discard smithy card from hand. */
