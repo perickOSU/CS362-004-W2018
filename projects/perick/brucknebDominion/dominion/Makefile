@@ -21,76 +21,172 @@ testBuyCard: testDrawCard.c dominion.o rngs.o
 testAll: dominion.o testSuite.c
 	gcc -o testSuite testSuite.c -g  dominion.o rngs.o $(CFLAGS)
 
-unittest1:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c unittest1.c rngs.c -o unittest1 -lm -g
-
-unittest2:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c unittest2.c rngs.c -o unittest2 -lm -g
-
-unittest3:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c unittest3.c rngs.c -o unittest3 -lm -g
-
-unittest4:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c unittest4.c rngs.c -o unittest4 -lm -g
-
-cardtest1:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c cardtest1.c rngs.c -o cardtest1 -lm -g
-
-cardtest2:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c cardtest2.c rngs.c -o cardtest2 -lm -g
-
-cardtest3:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c cardtest3.c rngs.c -o cardtest3 -lm -g
-
-cardtest4:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c cardtest4.c rngs.c -o cardtest4 -lm -g
-
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
+
+
+unittest1: unittest1.c dominion.o rngs.o
+	gcc  -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
+
+unittest2: unittest2.c dominion.o rngs.o
+	gcc  -o unittest2 -g  unittest2.c dominion.o rngs.o  $(CFLAGS)
+
+unittest3: unittest3.c dominion.o rngs.o
+	gcc  -o unittest3 -g  unittest3.c dominion.o rngs.o  $(CFLAGS)
+
+unittest4: unittest4.c dominion.o rngs.o
+	gcc  -o unittest4 -g  unittest4.c dominion.o rngs.o  $(CFLAGS)
+
+cardtest1: cardtest1.c dominion.o rngs.o
+	gcc  -o cardtest1 -g  cardtest1.c dominion.o rngs.o  $(CFLAGS)
+
+cardtest2: cardtest2.c dominion.o rngs.o
+	gcc  -o cardtest2 -g  cardtest2.c dominion.o rngs.o  $(CFLAGS)
+
+cardtest3: cardtest3.c dominion.o rngs.o
+	gcc  -o cardtest3 -g  cardtest3.c dominion.o rngs.o  $(CFLAGS)
+
+cardtest4: cardtest4.c dominion.o rngs.o
+	gcc  -o cardtest4 -g  cardtest4.c dominion.o rngs.o  $(CFLAGS)
+
+randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
+	gcc  -o randomtestadventurer -g  randomtestadventurer.c dominion.o rngs.o  $(CFLAGS)
+
+randomtestcard1: randomtestcard1.c dominion.o rngs.o
+	gcc  -o randomtestcard1 -g  randomtestcard1.c dominion.o rngs.o  $(CFLAGS)
+
+randomtestcard2: randomtestcard2.c dominion.o rngs.o
+	gcc  -o randomtestcard2 -g  randomtestcard2.c dominion.o rngs.o  $(CFLAGS)
+
+randomtestadventurer.out: randomtestadventurer
+	@chmod +x ./runAdventurer
+	./runAdventurer
+	@printf "=========== UNIT TEST COVERAGE REPOT ============\n" >> randomtestadventurer.out
+	@printf "cardEffect_Adventurer function:\n" >> randomtestadventurer.out
+	@gcov -bf dominion.c | sed -n '/cardEffect_Adventurer/{n;p; n;p; n;p; n;p}' >> randomtestadventurer.out
+	@printf "\n\n\n=========== TEST PROGRAM OUTPUT ============\n\n\n" >> randomtestadventurer.out
+	@cat temp >> randomtestadventurer.out
+	@rm -f temp
+	@printf "\033[32mCoverage Report for cardEffect_Adventurer\033[0m\n";
+	@printf "\033[35mSee full report in randomtestadventurer.out\033[0m\n";
+	head randomtestadventurer.out
+	@printf "\n\033[31;1mNOTE: If you remove the cooked-up Assignment-2 bug in \n \
+	cardEffect_Adventurer which causes silver cards to be discarded rather than drawn, \n \
+	the error ouput is drastically reduced. But I left it in per assignment spec\033[0m\n\n\n"
+
+randomtestcard1.out: randomtestcard1
+	@chmod +x ./runSmithy
+	./runSmithy
+	@printf "=========== UNIT TEST COVERAGE REPOT ============\n" >> randomtestcard1.out
+	@printf "cardEffect_Smithy function:\n" >> randomtestcard1.out
+	@gcov -bf dominion.c | sed -n '/cardEffect_Smithy/{n;p; n;p; n;p; n;p}' >> randomtestcard1.out
+	@printf "\n\n\n=========== TEST PROGRAM OUTPUT ============\n\n\n" >> randomtestcard1.out
+	@cat temp >> randomtestcard1.out
+	@rm -f temp
+	@printf "\033[32mCoverage Report for cardEffect_Smithy\033[0m\n";
+	@printf "\033[35mSee full report in randomtestcard1.out\033[0m\n";
+	head randomtestcard1.out
+	@printf "\n\033[31;1mNOTE: The coocked up Assignment 2 bug triggers erros\n \
+		on every run...\033[0m\n\n\n"
+
+randomtestcard2.out: randomtestcard2
+	@chmod +x ./runVillage
+	./runVillage
+	@printf "=========== UNIT TEST COVERAGE REPOT ============\n" >> randomtestcard2.out
+	@printf "cardEffect_Village function:\n" >> randomtestcard2.out
+	@gcov -bf dominion.c | sed -n '/cardEffect_Village/{n;p; n;p; n;p; n;p}' >> randomtestcard2.out
+	@printf "\n\n\n=========== TEST PROGRAM OUTPUT ============\n\n\n" >> randomtestcard2.out
+	@cat temp >> randomtestcard2.out
+	@rm -f temp
+	@printf "\033[32mCoverage Report for cardEffect_Village\033[0m\n";
+	@printf "\033[35mSee full report in randomtestcard2.out\033[0m\n";
+	head randomtestcard2.out
+	@printf "\n\033[31;1mNOTE: The coocked up Assignment 2 bug triggers erros\n \
+		on every run...\033[0m\n\n\n"
+
 
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-randomtest: randomtestdriver.h randomtestdriver.c randomtestadventurer.h randomtestadventurer.c randomtestcard1.h randomtestcard1.c randomtestcard2.h randomtestcard2.c dominion.o rngs.o 
-	gcc -o test04 randomtestdriver.c randomtestadventurer.c randomtestcard1.c randomtestcard2.c -g dominion.o rngs.o $(CFLAGS)
-	./test04 adventurer > randomtestadventurer.out
-	gcov -f -b dominion.c >> randomtestadventurer.out
-	
-	./test04 smithy > randomtestcard1.out
-	gcov -f -b dominion.c >> randomtestcard1.out
-	
-	./test04 council_room > randomtestcard2.out
-	gcov -f -b dominion.c >> randomtestcard2.out
 
-assignment3: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c rngs.c dominion.o
-	gcc unittest1.c dominion.o rngs.o -lm --coverage -o unittest1
-	gcc unittest2.c dominion.o rngs.o -lm --coverage -o unittest2
-	gcc unittest3.c dominion.o rngs.o -lm --coverage -o unittest3
-	gcc unittest4.c dominion.o rngs.o -lm --coverage -o unittest4
-	gcc cardtest1.c dominion.o rngs.o -lm --coverage -o cardtest1
-	gcc cardtest2.c dominion.o rngs.o -lm --coverage -o cardtest2
-	gcc cardtest3.c dominion.o rngs.o -lm --coverage -o cardtest3
-	gcc cardtest4.c dominion.o rngs.o -lm --coverage -o cardtest4
 
-	./unittest1 >> unittestresults.out
-	./unittest2 >> unittestresults.out
-	./unittest3 >> unittestresults.out
-	./unittest4 >> unittestresults.out
 
-	./cardtest1 >> unittestresults.out
-	./cardtest2 >> unittestresults.out
-	./cardtest3 >> unittestresults.out
-	./cardtest4 >> unittestresults.out
-
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-
-	player: player.c interface.o
+player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player testDrawCard testBuyCard badTestDrawCard
+unittestresults.out: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+	#
+	# Do non-card unit tests
+	#
+	./unittest1 > unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "updateCoints function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/updateCoins/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	rm dominion.gcda
+	./unittest2 >> unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "getCost function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/getCost/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	rm dominion.gcda
+	./unittest3 >> unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "whoseTurn function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/whoseTurn/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	rm dominion.gcda
+	./unittest4 >> unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "numHandCards function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/numHandCards/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	# Do card unit tests
+	#
+	rm dominion.gcda
+	./cardtest1 >> unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "smithy card effect function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/cardEffect_Smithy/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	rm dominion.gcda
+	./cardtest2 >> unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "adventurer card effect function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/cardEffect_Adventurer/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	rm dominion.gcda
+	./cardtest3 >> unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "great hall card effect function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/cardEffect_GreatHall/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	rm dominion.gcda
+	./cardtest4 >> unittestresults.out
+	printf "\n\n=========== UNIT TEST COVERAGE REPOT ============\n\n" >> unittestresults.out
+	printf "village card effect function:\n" >> unittestresults.out
+	gcov -abcfu dominion.c | sed -n '/cardEffect_Village/{n;p; n;p; n;p; n;p}' >> unittestresults.out
+	#
+	# Do all tests and print overall report
+	#
+	rm dominion.gcda
+	./unittest1 > /dev/null
+	./unittest2 > /dev/null
+	./unittest3 > /dev/null
+	./unittest4 > /dev/null
+	./cardtest1 > /dev/null
+	./cardtest2 > /dev/null
+	./cardtest3 > /dev/null
+	./cardtest4 > /dev/null
+	printf "\n\n========== FULL DOMINION COVERAGE REPORT ==========\n\n" >> unittestresults.out
+	printf "\n\ndominion.c Overall Summary:\n\n" >> unittestresults.out
+	gcov dominion.c -abcu >> unittestresults.out
+	printf "\n\ndominion.c Function Break-Down Summary:\n\n" >> unittestresults.out
+	gcov dominion.c -abcuf >> unittestresults.out
+
+all: playdom player testDrawCard testBuyCard badTestDrawCard testUpdateCoins
 
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe

@@ -1,0 +1,127 @@
+BugsInTeammateCode.txt
+==============================
+
+Title:    		Incorrect post deck size.
+No.:			SMITHY-1
+Class:			FEATURE ERROR
+Severity:		MAJOR
+Priority:		HIGH
+
+Date:			3/4/18
+Reported By:	Kruno Peric
+Email:      	perick@oregonstate.edu
+
+
+Product:			Dominion            Version: 	bruckneb-assignment-4b
+Platform:   		Linux               Version: 	4.9.0-6-amd64 on Debian 9.
+Target Unit:	    Smithy Effect
+
+Is it reproducible: Yes
+
+Description
+===========
+Smithy is supposed to pull 3 cards from the deck, but the deck size is only
+reduced by 2.
+
+
+Minimal Example
+----------------
+set up the (pre) gameState with:
+
+numPlayers = 2
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+
+and run:
+
+cardEffect(smithy, 0, 0, 0, &postState, handPos, 0);
+
+
+Expected Results
+----------------
+postState.handCount[player]  	= 7
+poststate.deckCount[player] 	= 2
+poststate.discardCount[player] 	= 1
+
+
+Actual Results
+--------------
+Incorrect hand count!
+postState.handCount[player] 	= 6
+
+player deckCount mismatch!
+poststate.deckCount[player]     = 3
+
+Discard pile did not incease by 1 card!
+poststate.discardCount[player] 	= 0
+
+
+
+
+==============================
+
+Title:    		Failure to discard.
+No.:			SMITHY-2
+Class:			FEATURE ERROR
+Severity:		MAJOR
+Priority:		HIGH
+
+Date:			3/4/18
+Reported By:	Kruno Peric
+Email:      	perick@oregonstate.edu
+
+
+Product:			Dominion            Version: 	bruckneb-assignment-4b
+Platform:   		Linux               Version: 	4.9.0-6-amd64 on Debian 9.
+Target Units:	    Smithy Effect, discardCard
+
+Is it reproducible: Yes
+
+Description
+===========
+After playing the smithy card (a call to cardEffect(smithy, ...)), the smithy
+card played (located in handPos) should move to the discard pile, thus
+increasing the discard count by 1, but it does not get increased and the card
+is not moved to the discard pile.
+
+
+Minimal Example
+----------------
+set up the (pre) gameState with:
+
+numPlayers = 2
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+
+and run:
+
+cardEffect(smithy, 0, 0, 0, &postState, handPos, 0);
+
+
+Expected Results
+----------------
+postState.handCount[player]  	= 7
+poststate.deckCount[player] 	= 2
+poststate.discardCount[player] 	= 1
+
+
+Actual Results
+--------------
+Incorrect hand count!
+postState.handCount[player] 	= 6
+
+player deckCount mismatch!
+poststate.deckCount[player]     = 3
+
+Discard pile did not incease by 1 card!
+poststate.discardCount[player] 	= 0
+
+
+Additional Information
+----------------------
+The error is routed in the call to discardCard().  This function doesn't 
+properly move smithy to the discard pile and increment the count.

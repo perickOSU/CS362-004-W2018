@@ -62,6 +62,7 @@ int assertTrue(struct gameState* preState, struct gameState* postState)
 	/* check if two cards were added to the current player's hand */
 	if (postState->handCount[whoseTurn] != preState->handCount[whoseTurn] + 2) {
 		printf("Incorrect hand count!\n");
+		printf("postState.handCount = %i\n", postState->handCount[whoseTurn]);
 		res = -1;
 	}
 
@@ -77,6 +78,8 @@ int assertTrue(struct gameState* preState, struct gameState* postState)
 
 	if (postSmithyNum != preSmithyNum - 1) {
 		printf("discard error!\n");
+		printf("number of smithy in hand [PRE] = %i\n", preSmithyNum);
+		printf("number of smithy in hand [POST] = %i\n", postSmithyNum);
 		res = -1;
 	}
 
@@ -93,6 +96,7 @@ int assertTrue(struct gameState* preState, struct gameState* postState)
 		 */
 		if (postState->deckCount[whoseTurn] != preDeckCount - 3) {
 			printf("player deckCount mismatch!\n");
+			printf("postState.deckCount = %i\n", postState->deckCount[whoseTurn]);
 			res = -1;
 		}
 		if (postState->discardCount[whoseTurn] != preDiscardCount + 1) {
@@ -101,6 +105,7 @@ int assertTrue(struct gameState* preState, struct gameState* postState)
 			 * smithy card gets discarded after it's used.
 			 */
 			printf("Discard pile did not incease by 1 card!\n");
+			printf("postState.discardCount = %i\n", postState->discardCount[whoseTurn]);
 			res = -1;
 		}
 
@@ -170,7 +175,16 @@ int main()
 
 	
 		/* check if the post state was altered correctly */
-		if (assertTrue(&preState, &postState) < 0) { res = -1; }
+		if (assertTrue(&preState, &postState) < 0) {
+			printf("failed test case was:\n\n");
+			printf("numPlayers = %i\n", i);
+			printf("handPos = %i\n", handPos);
+			printf("deckCount = %i\n", preState.deckCount[preState.whoseTurn]);
+			printf("handCount = %i\n", preState.handCount[preState.whoseTurn]);
+			printf("discardCount = %i\n", preState.discardCount[preState.whoseTurn]);
+			printf("-----END CASE----\n\n\n");
+			res = -1;
+		}
 	}
 
 	for (i=0; i<3; i++) {
@@ -195,7 +209,18 @@ int main()
 		cardEffect(smithy, 0, 0, 0, &postState, handPos, 0);
 
 		/* check if the post state was altered correctly */
-		if (assertTrue(&preState, &postState) < 0) { res = -1; }
+		if (assertTrue(&preState, &postState) < 0) {
+			printf("\nfailed test case was:\n\n");
+			printf("numPlayers = %i\n", i);
+			printf("handPos = %i\n", handPos);
+			printf("deckCount = %i\n", preState.deckCount[preState.whoseTurn]);
+			printf("handCount = %i\n", preState.handCount[preState.whoseTurn]);
+			printf("discardCount = %i\n", preState.discardCount[preState.whoseTurn]);
+			printf("-----END CASE----\n\n\n");
+			res = -1;
+		}
+
+
 	}
 	
 	if (res == 0) { printf("All tests passed!\n"); }

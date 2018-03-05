@@ -1,0 +1,357 @@
+TESTING updateCoins():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+updateCoints function:
+Lines executed:100.00% of 11
+No branches
+No calls
+
+TESTING getCost():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+getCost function:
+Lines executed:100.00% of 30
+No branches
+No calls
+
+TESTING whoseTurn():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+whoseTurn function:
+Lines executed:100.00% of 2
+No branches
+No calls
+
+TESTING numHandCards():
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+numHandCards function:
+Lines executed:100.00% of 2
+No branches
+No calls
+
+TESTING smithy card:
+Incorrect hand count!
+postState.handCount = 6
+player deckCount mismatch!
+postState.deckCount = 3
+Discard pile did not incease by 1 card!
+postState.discardCount = 0
+failed test case was:
+
+numPlayers = 0
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 6
+player deckCount mismatch!
+postState.deckCount = 3
+Discard pile did not incease by 1 card!
+postState.discardCount = 0
+failed test case was:
+
+numPlayers = 1
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 6
+player deckCount mismatch!
+postState.deckCount = 3
+Discard pile did not incease by 1 card!
+postState.discardCount = 0
+failed test case was:
+
+numPlayers = 2
+handPos = 2
+deckCount = 5
+handCount = 5
+discardCount = 0
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 6
+player deckCount mismatch after discard pile shuffle!
+pre state discard count: 10
+post state deck count: 8
+player discardCount doesn't contain one card after a discard pile shuffle/transfer!
+
+failed test case was:
+
+numPlayers = 0
+handPos = 2
+deckCount = 0
+handCount = 5
+discardCount = 10
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 6
+player deckCount mismatch after discard pile shuffle!
+pre state discard count: 10
+post state deck count: 9
+player discardCount doesn't contain one card after a discard pile shuffle/transfer!
+
+failed test case was:
+
+numPlayers = 1
+handPos = 2
+deckCount = 1
+handCount = 5
+discardCount = 10
+-----END CASE----
+
+
+Incorrect hand count!
+postState.handCount = 6
+player deckCount mismatch after discard pile shuffle!
+pre state discard count: 10
+post state deck count: 0
+player discardCount doesn't contain one card after a discard pile shuffle/transfer!
+
+failed test case was:
+
+numPlayers = 2
+handPos = 2
+deckCount = 2
+handCount = 5
+discardCount = 10
+-----END CASE----
+
+
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+smithy card effect function:
+Lines executed:100.00% of 6
+No branches
+No calls
+
+TESTING adventurer card:
+All tests passed!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+adventurer card effect function:
+Lines executed:100.00% of 18
+No branches
+No calls
+
+TESTING great hall card:
+Discard pile did not incease by 1 card!
+Discard pile did not incease by 1 card!
+Discard pile did not incease by 1 card!
+Discard pile did not incease by 1 card!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+great hall card effect function:
+Lines executed:100.00% of 6
+No branches
+No calls
+
+TESTING village card:
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+ERROR numActions in correct!
+Discard pile did not incease by 1 card!
+
+
+=========== UNIT TEST COVERAGE REPOT ============
+
+village card effect function:
+Lines executed:100.00% of 6
+No branches
+No calls
+
+
+
+========== FULL DOMINION COVERAGE REPORT ==========
+
+
+
+dominion.c Overall Summary:
+
+File 'dominion.c'
+Lines executed:36.70% of 564
+Branches executed:34.46% of 415
+Taken at least once:28.19% of 415
+Calls executed:26.00% of 100
+Creating 'dominion.c.gcov'
+
+
+
+dominion.c Function Break-Down Summary:
+
+Function 'updateCoins'
+Lines executed:100.00% of 11
+No branches
+No calls
+
+Function 'gainCard'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'discardCard'
+Lines executed:84.62% of 13
+No branches
+No calls
+
+Function 'cardEffect_GreatHall'
+Lines executed:100.00% of 6
+No branches
+No calls
+
+Function 'cardEffect_Village'
+Lines executed:100.00% of 6
+No branches
+No calls
+
+Function 'cardEffect_Adventurer'
+Lines executed:100.00% of 18
+No branches
+No calls
+
+Function 'cardEffect_Smithy'
+Lines executed:100.00% of 6
+No branches
+No calls
+
+Function 'cardEffect_CouncilRoom'
+Lines executed:0.00% of 9
+No branches
+No calls
+
+Function 'cardEffect'
+Lines executed:5.80% of 207
+No branches
+No calls
+
+Function 'getCost'
+Lines executed:100.00% of 30
+No branches
+No calls
+
+Function 'drawCard'
+Lines executed:100.00% of 22
+No branches
+No calls
+
+Function 'getWinners'
+Lines executed:0.00% of 24
+No branches
+No calls
+
+Function 'scoreFor'
+Lines executed:0.00% of 24
+No branches
+No calls
+
+Function 'isGameOver'
+Lines executed:0.00% of 10
+No branches
+No calls
+
+Function 'endTurn'
+Lines executed:0.00% of 20
+No branches
+No calls
+
+Function 'whoseTurn'
+Lines executed:100.00% of 2
+No branches
+No calls
+
+Function 'fullDeckCount'
+Lines executed:0.00% of 9
+No branches
+No calls
+
+Function 'supplyCount'
+Lines executed:0.00% of 2
+No branches
+No calls
+
+Function 'handCard'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'numHandCards'
+Lines executed:100.00% of 2
+No branches
+No calls
+
+Function 'buyCard'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'playCard'
+Lines executed:0.00% of 14
+No branches
+No calls
+
+Function 'shuffle'
+Lines executed:100.00% of 16
+No branches
+No calls
+
+Function 'initializeGame'
+Lines executed:95.16% of 62
+No branches
+No calls
+
+Function 'kingdomCards'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'newGame'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'compare'
+Lines executed:83.33% of 6
+No branches
+No calls
+
+File 'dominion.c'
+Lines executed:36.70% of 564
+Branches executed:34.46% of 415
+Taken at least once:28.19% of 415
+Calls executed:26.00% of 100
+Creating 'dominion.c.gcov'
+

@@ -1,104 +1,190 @@
-// TESTING: smithy
-//
-// INJECTED BUG
-// In the section of cardEffect_Smithy where the current player is to draw 3
-// cards, I have modified the lower bound of the for loop from 0 to 1, which 
-// will affect the outcome of the game and which will be difficult to detect 
-// without careful review of the gameplay.
+/*
+ * @Author:
+ *
+ * 	Kruno Peric
+ *
+ * @desc
+ * 		
+ *	Smithy effect tester
+ */
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "randomtestdriver.h"
 #include "dominion.h"
 #include "dominion_helpers.h"
+#include <stdio.h>
+#include <string.h>
+#include "rngs.h"
+#include <stdbool.h>
+#include <math.h>
 
-void testCard_smithy(struct gameState *gs_pre, struct gameState *gs_post) {
-	int choice1, choice2, choice3, handPos, bonus;
-	
-	// choice should not matter for smithy; random values
-	choice1 = rand_int(curse, treasure_map);
-	choice2 = rand_int(curse, treasure_map);
-	choice3 = rand_int(curse, treasure_map);
-	
-	// handPos should not matter for smithy; random value
-	handPos = rand_int(0, gs_pre->handCount[gs_pre->whoseTurn]);
-	// put smithy at handPos for next play
-	gs_pre->hand[gs_pre->whoseTurn][handPos] = smithy;
-	if (DEBUG)
-		printf("rts.1\n");
-	
-	// copy pre to post gameState
-	memcpy(gs_post, gs_pre, sizeof(struct gameState));
-	if (DEBUG)
-		printf("rts.2\n");
-	
-	// now play the card
-	cardEffect(smithy, choice1, choice2, choice3, gs_post, handPos, &bonus);
-	if (DEBUG)
-		printf("rts.3\n");
-	
-	return;
+#define NUM_TESTS				1000
+#define NUM_CARD_T				26
+
+//#define NOISY
+#define BUG printf("-----  ERROR -----\n"); isError = true;
+
+
+void testOracle(struct gameState* post, int handPos);
+
+
+int main()
+{
+	int t, i, j;
+	struct gameState G;	
+
+	SelectStream(2);
+	PutSeed(10);
+
+	/*
+	 * Intialize and run NUM_TESTS random tests on smithyEffect().
+	 */
+	printf("-------RUNNING SMITHY CARD RANDOM TEST-------\n\n");
+	for (t=0; t<NUM_TESTS; t++) {
+		/* fill G with random bytes. */
+		for (i=0; i<sizeof(G); i++) {
+			((char*)(&G))[i] = floor(Random() * 256);
+		}
+
+		G.numPlayers = MAX_PLAYERS;
+
+
+		/* intialize deck counts for all players. */
+		for (i=0; i<G.numPlayers; i++) {
+			G.deckCount[i] = floor(Random() * MAX_DECK);
+			G.handCount[i] = floor(Random() * MAX_HAND);
+			G.discardCount[i] = floor(Random() * MAX_DECK);
+			G.playedCardCount = 0;
+
+			/* intialize the player's hand, discard and deck piles. */
+			for (j=0; j<G.deckCount[i]; j++) {
+				G.deck[i][j] = floor(Random() * NUM_CARD_T);
+			}
+
+			for (j=0; j<G.handCount[i]; j++) {
+				G.hand[i][j] = floor(Random() * NUM_CARD_T);
+			}
+
+			for (j=0; j<G.discardCount[i]; j++) {
+				G.discard[i][j] = floor(Random() * NUM_CARD_T);
+			}
+		}
+
+
+		/* pick a player at random for the turn. */
+		G.whoseTurn = floor(Random() * G.numPlayers);
+
+		/* pick a random handPos for Smithy. */
+		int handPos = floor(Random() * G.handCount[G.whoseTurn]);
+		G.hand[G.whoseTurn][handPos] = smithy;
+
+		/* run test and oracle */
+		testOracle(&G, handPos);
+	}
+
+	printf("------SMITHY TEST COMPLETE.------\n");
+
+	return 0;
 }
 
-void validate_smithy(struct gameState *gs_pre, struct gameState *gs_post, struct validations *v) {
+
+
+/*
+ * testOracle()
+ *
+ * 	@desc
+ *
+ * 		Checks to see that the smithyEffect() method behaves according
+ * 		to how the smithy card is supposed to work.
+ */
+void testOracle(struct gameState* post, int handPos)
+{
+	bool isError = false;
+	struct gameState pre;
+	int p = post->whoseTurn;
 	int i;
-	/* compare gs_pre and gs_post, looking for the following */
-	/*********************************************************/
-	/* whoseTurn shouldn't change */
-	if (gs_pre->whoseTurn != gs_post->whoseTurn)
-		v->errcount_whoseTurn++;
+	int preCount = pre.deckCount[p];
+
+	/* make a copy of the game state to compare. */
+	memcpy(&pre, post, sizeof pre);
+
+	/* run the target function. */
+	cardEffect(smithy, 0, 0, 0, post, handPos, 0);
 	
-	/* gs_post->hand increased by 3*/
-	/* additional cards */
-	if (gs_post->handCount[gs_pre->whoseTurn] != gs_pre->handCount[gs_pre->whoseTurn] + 3) {
-		v->errcount_playerHandCount++;
-		if (DEBUG) {
-			printf("gs_post->handCount=%d, gs_pre->handCount=%d\n", gs_post->handCount[gs_pre->whoseTurn], gs_pre->handCount[gs_pre->whoseTurn]);
-			// exit(1);
+	/*
+	 * "move" three cards from the deck, to the hand, and "discard"
+	 * the smithy card located at handPos.
+	 */
+	if (pre.deckCount[p] > 2) {
+		/* draw from top of deck onto back of hand. */
+		for (i=0; i<3; i++) {
+			pre.hand[p][pre.handCount[p]] = pre.deck[p][pre.deckCount[p]-1];
+			pre.handCount[p]++;
+			pre.deckCount[p]--;
 		}
-	}
-	
-	/* gs_post->deck reduction by 3 cards */
-	if (gs_post->deckCount[gs_pre->whoseTurn] != gs_pre->deckCount[gs_pre->whoseTurn] - 3) {
-		v->errcount_playerDeckCount++;
-		if (DEBUG) {
-			printf("gs_post->deckCount=%d, gs_pre->deckCount=%d\n", gs_post->deckCount[gs_pre->whoseTurn], gs_pre->deckCount[gs_pre->whoseTurn]);
-			// exit(1);
+
+		/* pull smithy "out" of the hand. */
+		if (handPos == pre.handCount[p] - 1 || pre.handCount[p] == 1) {
+			/* smithy is at the back of the hand. just drop the count. */
+			pre.handCount[p]--;
+		} else {
+			/* 
+			 * move the last card in the hand to where the smithy card "was",
+			 * set the last card to -1 and update the handCount.
+			 */
+			pre.hand[p][handPos] = pre.hand[p][pre.handCount[p] - 1];
+			pre.hand[p][pre.handCount[p] - 1] = -1;
+			pre.handCount[p]--;
 		}
-	}
-	
-	/* gs_post->discard equal to pre (cardEffect doesn't actually discard) */
-	if (gs_post->discardCount[gs_pre->whoseTurn] != gs_pre->discardCount[gs_pre->whoseTurn]) {
-		v->errcount_playerDiscardCount++;
-		if (DEBUG) {
-			printf("gs_post->discardCount=%d, gs_pre->discardCount=%d\n", gs_post->discardCount[gs_pre->whoseTurn], gs_pre->discardCount[gs_pre->whoseTurn]);
-			// exit(1);
-		}
-	}
-	
-	/* playedCardCount incremented by 1 */
-	if (gs_post->playedCardCount != gs_pre->playedCardCount + 1) {
-		if (DEBUG) {
-			printf("gs_post->playedCardCount=%d, gs_pre->playedCardCount=%d\n", gs_post->playedCardCount, gs_pre->playedCardCount);
-			// exit(1);
-		}
-		v->errcount_playedCards++;
+
+		/* add the smithy card to the played pile and update the played count. */
+		pre.playedCards[pre.playedCardCount] = smithy;
+		pre.playedCardCount++;
+
+
+		/* 
+		 * TODO: 
+		 * 	
+		 * 		Smithy is supposed to discard... but dominion.c doesn't...
+		 * 		Leaving this off, just to be able to test the rest of the code.
+		 */
+//		pre.discard[p][pre.discardCount[p]] = smithy;
+//		pre.discardCount[p]++;
+	} else {
+		/* 
+		 * the deck doesn't have enough cards, which will cause a shuffling.
+		 * use the discard and deck from post...
+		 */
+		memcpy(pre.deck[p], post->deck[p], sizeof(pre.deck[p]));
+		memcpy(pre.discard[p], post->discard[p], sizeof(pre.discard[p]));
 		
-	}
-	
-	/* opponents' cards unchanged */
-	for (i = 0; i < gs_pre->numPlayers; i++) {
-		if (i != gs_pre->whoseTurn) {
-			if (gs_pre->deckCount[i] != gs_post->deckCount[i])
-				v->errcount_opponentDeckCount++;
-			if (gs_pre->handCount[i] != gs_post->handCount[i])
-				v->errcount_opponentHandCount++;
-			if (gs_pre->discardCount[i] != gs_post->discardCount[i])
-				v->errcount_opponentDiscardCount++;
+		/* 
+		 * copy the drawn cards in post to pre's hand.  Increment the hand count
+		 * to reflect 3 drawn cards.
+		 */
+		for (i=0; i<=3; i++) {
+			pre.hand[p][post->handCount[p]-i] = post->hand[p][post->handCount[p]-i];
 		}
+		
+		pre.handCount[p] = post->handCount[p];
+
+		/* replace the smithy card with the card in post */
+		pre.hand[p][handPos] = post->hand[p][handPos];
+
+
+		/* 
+		 * set the deck count the discard count - whatever the deck didn't 
+		 * cover.  Set the discard to zero.
+		 */
+		pre.deckCount[p] = pre.discardCount[p] - (3 - pre.deckCount[p]);
+		pre.discardCount[p] = 0;
+
+		/* add the smithy card to the played pile and update the played count. */
+		pre.playedCards[pre.playedCardCount] = smithy;
+		pre.playedCardCount++;
 	}
-	
-	/* TO DO: what if we have to shuffle discard back into deck? */
-	
+
+
+	if (memcmp(&pre, post, sizeof pre) != 0) {
+		BUG
+		printf("preCount = %d\n", preCount);
+	}
 }

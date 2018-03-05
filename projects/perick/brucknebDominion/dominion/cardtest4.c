@@ -1,63 +1,167 @@
-/*******************************************************************************
-* Student: Brian Bruckner
-* Course:  CS_362_400_W2018
-*
-* File: cardtest1.c
-* 
-* This file tests the Village card
-*******************************************************************************/
-#include <stdlib.h>
+/*
+ * cardtest4.c
+ *
+ * 	@author
+ * 		Kruno Peric
+ *
+ *	@desc
+ *		Tests the village card.
+ *
+ *	@inputs
+ *
+ *	@outputs
+ */
+#include "dominion.h"
+#include "dominion_helpers.h"
+#include <string.h>
 #include <stdio.h>
 #include <assert.h>
-#include "dominion.h"
-//#include "dominion_helpers.h"
 #include "rngs.h"
 
-int main() {
-	struct gameState G;
-	int k[10] = {adventurer, gardens, embargo, village, minion, mine, council_room, sea_hag, tribute, smithy};
-	int retval, hc, dc, na, error;
-	
-	retval = initializeGame(2, k, 1, &G);
-	
-	assert(retval == 0);
-	
-	// Force card being tested into the hand of player 0
-	G.hand[0][0] = village;
-	hc = G.handCount[0];
-	dc = G.deckCount[0];
-	
-	// Initialize numActions to 1 (start of turn)
-	na = G.numActions = 1;
-	
-	// choice1, choice2, choice3 are irrelevant for village
-	playCard(0, 0, 0, 0, &G);
-	
-	error = 0;
-	// Village gives +1 Card, +2 Actions, so run the following asserts
-	
-	// Assert that handCount[0] hasn't changed
-	if (G.handCount[0] != hc) {
-		error = 1;
-		printf("Error: handCount is %d but should be %d\n", G.handCount[0], hc);
-	}
-	
-	// Assert that numActions = 2 (init @ 1; -1 played; +2)
-	if (G.numActions != (na - 1 + 2)) {
-		error = 1;
-		printf("Error: numActions is %d but should be %d\n", G.numActions, (na-1+2));
-	}
-	
-	// Assert that discardCount[0] = 1
-	if (G.discardCount[0] != 1) {
-		error = 1;
-		printf("Error: discardCount is %d but should be %d\n", G.discardCount[0], (1));
-	}
-	
-	// Assert that deckCount has reduced by 1
-	if (G.deckCount[0] != (dc-1)) {
-		error = 1;
-		printf("Error: deckCount is %d but should be %d\n", G.deckCount[0], dc-1);
+
+#define ARR_LEN(x) ( sizeof(x) / sizeof(x[0]) )
+
+
+struct testConf {
+	int coin1;
+	int coin2;
+};
+
+
+
+
+/*
+ * assertTrue()
+ *
+ * 	@desc
+ *
+ *	@params
+ *		struct 	gameState preState		state before cardEffect
+ *		struct 	gameState postState		state after cardEffect
+ *
+ *	@outputs
+ *		prints test failure report
+ */
+int assertTrue(struct gameState* preState, struct gameState* postState)
+{
+	int res, i;
+	int p = preState->whoseTurn;
+	/*
+	 * check that num actions increased accordingly
+	 */
+	if ( postState->numActions != preState->numActions + 2) {
+		printf("ERROR numActions in correct!\n");
 	}
 
+	/* check the deck count  for the player */
+	int preDeckCount = preState->deckCount[p];
+	int preDiscardCount = preState->discardCount[p];
+	if (preDeckCount > 0) {
+		/*
+		 * if the deck has at least 1 cards, re-shuffling
+		 * the discard pile won't be necessary and the deck
+		 * should just have three less cards than before the call
+		 * to cardEffect.
+		 */
+		if (postState->deckCount[p] != preDeckCount - 1) {
+			printf("player deckCount mismatch!\n");
+			res = -1;
+		}
+		if (postState->discardCount[p] != preDiscardCount + 1) {
+			/*
+			 * the discard pile should be incrased by one, since the
+			 * village card gets discarded after it's used.
+			 */
+			printf("Discard pile did not incease by 1 card!\n");
+			res = -1;
+		}
+	} else {
+		/*
+		 * here the deck will have to be replenished with the shuffled
+		 * discard pile.  The discard pile should then only contain the
+		 * village card.
+		 */
+		if (postState->deckCount[p] != preDiscardCount - 1) {
+			printf("player deckCount mismatch after discard pile shuffle!\n");
+			res = -1;
+		}
+		/* the discard count should have just the village card. */
+		if (postState->discardCount[p] != 1) {
+			printf("player discardCount doesn't contain one card!\n");
+		}
+	}
+
+	/*
+	 * check that no other players decks and hands were effected...
+	 */
+	for (i=0; i<preState->numPlayers; i++) {
+		if (i != p) {
+			if ( preState->deckCount[i] != postState->deckCount[i] ) {
+				printf("other player's deck modified!\n");
+				res = -1;
+			}
+			if ( preState->handCount[i] != postState->handCount[i] ) {
+				printf("other player's numActions modified!\n");
+				res = -1;
+			}
+		}
+	}
+
+	if (res < 0) { return -1; } else { return 0; }
+}
+
+
+int main()
+{
+	int j,z;
+	int seed = 					1000;		/* for random number generator */
+	int k[10] = {adventurer, council_room, feast, gardens, mine
+								, remodel, smithy, village, baron, great_hall};
+	struct gameState preState, postState;
+	int res = 0;							/* for test results */
+	const int handPos = 2;
+	int deck[MAX_DECK];
+
+
+	/* setup deck size test cases. */
+	int deckSize[] = {2,5,10,100};
+
+	
+	/* initiate tests... */
+	printf ("TESTING village card:\n");
+
+	/* 
+	 * test cardEffect() for village with each configuration in Conf.
+	 */
+
+	/* configure the pre state of the game and copy to the post state. */
+	memset(&preState, 0, sizeof(struct gameState));
+	memset(&postState, 0, sizeof(struct gameState));
+	initializeGame(2, k, seed, &preState);
+
+	/* replace one of the player's initial cards with a village hard */
+	preState.hand[preState.whoseTurn][handPos] = village;
+
+	for (j=0; j<ARR_LEN(deckSize); j++) {	
+		/* load the test deck with kingdom cards */
+		for (z=0; z<ARR_LEN(deck); z++) { deck[z] = k[z % 10]; }
+
+		/* over-write the current player's deck with the cooked up deeck. */
+		memcpy(preState.deck[preState.whoseTurn], deck, sizeof(deck));
+		preState.deckCount[preState.whoseTurn] = deckSize[j] + 1;
+		preState.discardCount[preState.whoseTurn] = 0;
+
+		/* save the state. */
+		memcpy(&postState, &preState, sizeof(struct gameState));
+
+		/* run card effect on the configured state. */
+		cardEffect(village, 0, 0, 0, &postState, handPos, 0);
+
+		/* check if the post state was altered correctly */
+		if (assertTrue(&preState, &postState) < 0) { res = -1; }
+	}
+	
+	if (res == 0) { printf("All tests passed!\n"); }
+
+	return 0;
 }
