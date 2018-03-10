@@ -1,0 +1,37 @@
+bug_report.txt
+==============================
+
+Title:    		false positive: 'http:/'
+No.:			isValid-1
+Class:			FEATURE ERROR
+Severity:		MAJOR
+Priority:		HIGH
+
+Date:			3/10/18
+Reported By:	Kruno Peric
+Email:      	perick@oregonstate.edu
+
+
+Product:			Apache        		Version: 	
+Platform:   		JRE               	Version: 
+Target Unit:	    URLValidator.isValid
+
+Is it reproducible: Yes
+
+Description
+===========
+false positive for 'http:/'
+
+Minimal Example
+----------------
+urlVal.isValid("http:/www.google.com");
+
+
+Expected Results
+----------------
+false
+
+
+Actual Results
+--------------
+true
